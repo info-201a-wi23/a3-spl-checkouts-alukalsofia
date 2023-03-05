@@ -1,86 +1,80 @@
 ---
-title: "A3: SPL Library Checkouts"
+title: "Seattle Public Library Analysis"
 output: html_document
+date: "2023-02-25"
+name: "Sofia Alukal"
 ---
 
-### Introduction
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction and Summary
+I chose to work with the Seattle Public Library Data set of items checked out at least ten times a month from 2017 to 2023. This data set was extremely appealing because it covers a large amount of time while simultaneously showing the items that were the most popular. This data set did pose the risk of not having enough data to look at one item consistently over a year; it might have been checked out more than ten times several months out of the year, but checkouts fluctuate and could result in holes in the data. I was really interested in how TikTok and social media affected the popularity of particular books, and I was also interested in the transition to rented EBOOKs and Media types.
+
+A paragraph of summary information, citing at least 5 values calculated from the data
+Because of my interest in the affect of COVID on media types, I chose to look at: Print books over six years, EBOOK over six years, Print and EBOOK what month had the highest and number of checkouts, what the total number of checkouts is for each material type, and the top ten media types over six years. The year with the highest number of EBOOK checkouts was 2020 with 1,080,133 checkouts. I believe 2020 had the most checkouts because of the COVID-19 quarantine. The year with the least number of EBOOK checkouts was 2023, with 99,883, however, due to the fact that were are only three months into 2023, this value cannot be considered an accurate representation of the EBOOK checkout data. The year with the lowest number of EBOOK checkouts is 2017 with 440,127 checkouts. 2018 had 1,527,112 print book checkouts, which is the highest number of checkouts in one year from 2017 to 2023. In 2020, there was the least number of print book checkouts from 2017 to 2022 with only 363,157 checkouts. When looking at the the total number of checkouts for each material type, the top five most checked out material types are: BOOK (6397967), EBOOK (5053218), AUDIOBOOK (3728672), VIDEODISC (3326554). 
 
 An introduction of the data and a description of the trends/books/items you are choosing to analyze (and why!)
+My friends and I participated in a TikTok Book club last year, and the first series we read together was the A Court of Thorns and Roses Franchise. This coupled with my love of classic romance novels inspired my analysis for this dataset. There are five books in the A Court of Thorns and Roses (ACOTAR) series: A Court of Thorns and Roses, A Court of Mist and Fury, A Court of Wings and Ruin, A Court of Frost and Starlight, and A Court of Silver and Flames. These books were originally released in 2015 by Sarah J. Maas. They became internationally known as one of the best Fantasy Romance novels of the 21st century. Upon release they were extremely famous, their popularity died down after the third book in 2017, which is approximately when the graph begins. After Tiktok became a platform for book lovers alike, ACOTAR once again rose to extreme fame. I was really interested to see the effect of social media on the series as a whole. As a romance genre lover and a bibliophile, I was really interested in looking at the rise of ebooks and the decline of print books in the Seattle Public Library's checkout data. I am personally a fan of print books, and I am sad to see them becoming so expensive, but EBOOKs are much cheaper and better for the environment. Lastly, my all-time favorite author is Jane Austen, and my all-time favorite book is Pride and Prejudice, for my last graph I chose the analyze Jane Austens novels over time and which one is most popular overall. 
 
-### Summary Information
+## Data 
 
-Write a summary paragraph of findings that includes the 5 values calculated from your summary information R script
-
-These will likely be calculated using your DPLYR skills, answering questions such as:
-
-- What is the average number of checkouts for each item?
-- What is the month or year with the most/least checkouts for a book that you're interested in?
-- What is the month or year with the most/least checkouts for ebooks?
-- How has the number of print book checkouts changed over time?
-
-Feel free to calculate and report values that you find relevant.
-
-### The Dataset
-
-- Who collected/published the data?  
-- What are the parameters of the data (dates, number of checkouts, kinds of books, etc.)?
-- How was the data collected or generated?  
-- Why was the data collected?  
-- What, if any, ethical questions do you need to consider when working with this data?  
-- What are possible limitations or problems with this data?   (at least 200 words)
+> Who collected/published the data?
+- The Seattle Public Library Collected and published the data
+> What are the parameters of the data (dates, number of checkouts, kinds of books, etc.)?
+- Checkout month, Checkout year, number of checkouts, Title, Author, Media (Material) type, Checkout type, Usage class, subjects, publisher are the parameters of the data set.
+> How was the data collected or generated? 
+- The data was collected with the logs of checkouts in the Seattle Public Library. ISBNs and other barcode identifyers help to keep track of the number of times items are rented. 
+> Why was the data collected? 
+- This data was created to keep logs of the different components to checkouts: Authors, Publishers, Month, Year, Media class, Material typ, and popularity. This can help determine whether the library needs more copies of a particular item, or if they should move forward with more books by a particular author. This dataset could also potentially help them track lost items or pirating.
+> What, if any, ethical questions do you need to consider when working with this data? 
+- I believe there could be ethical questions regarding the applications and purposed of the data set. Should the seattle public library use the data set to change the Material Type or the availability of a particular item, it could have an impact on communities that do not have access to that particular Material type. For example, if most of the checkouts for a particular textbook was online, so they transition from print books to EBOOKS, some communities might be unable to access that book. I think there could also be ethical questions regarding the racial and gender distribution of the authors and creators of the books they purchase for the library, although, this issue is also a reflection of the publishing industry (in my opinion this issue would also pertain to the diversity of topics for books, movies, music and more).
+> What are possible limitations or problems with this data?   (at least 200 words) 
+- This data, although updated monthly, has very large gaps due to the fluctuation in checkouts; not every item is going to be checked out 10 times each month. This allows for a lot of gaps in graphs or data analysis. Another very prominent issue is the multiple different titles that can exist for one item; special editions, capital letters, variations, and more all make it very difficult to find all of the data for one particular item. In order to work around this, I focused on making all of the titles completely lowercase, and then I used string detect to search for key phrases in the titles; for example, A Court of Thorns of Roses had several hundred variations, I applied tolower() to the titles, and then str_detect(“a court of thorns and roses”) to make sure I captured all variations. Once I had filtered all of the titles for certain phrases, I assigned them all to one specific name. This is a very time consuming process if someone had to do this for several hundred or thousands of books. Fortunately, I only had to correct 10 books, but I am sure this data set is used on a much larger scale, and this limitation would be very frustrating to correct. Finally, one small limitation is that 2023 is included in the dataset despite the fact that the year isn’t complete, when calculating yearly averages or analyzing data, 2023 has to be excluded.
 
 
-### First Trends Over Time Chart
 
-Include a chart. Make sure to describe why you included the chart, and what patterns emerged
+-2020, and 2023 heavily impacting the data
+
+## First Trend over time
+
+```{r acotar_plot, warning = FALSE, echo = FALSE}
+plot(acotar_plot)
+```
+
+When looking at the A Court of Thorns and Roses ('ACOTAR') data, I noticed that there were large spikes in the number of checkouts for the book; these fluctuations coincide with the rough timeline of Booktok's ACOTAR recommendation. Although I had predicted that all of the books would have steep inclines surrounding the series' resurgence of fame, I noticed that the rest of the books remained pretty consisted in their checkout numbers per month, consistently remaining below 50 checkouts per month, while the first book (ACOTAR) reached up to 1500 checkouts per month. I think the discrepancy between the first book and the rest of the series is due to the hype of book on social media (which increases the number of checkouts for the first book) and the resulting lack of interest in the rest of the series. 
+
+## Second Trends over time
+
+```{r material_plot, warning = FALSE, echo=FALSE}
+plot(material_plot)
+```
 
 The first chart that you will create and include will show the trend over time of your variable/topic/interest. Think carefully about what you want to communicate to your user (you may have to find relevant trends in the dataset first!). Here are some requirements to help guide your design:
 
-- Show more than one, but fewer than ~10 trends
-  - For example, two books, or 5 different mediums
-- You must have clear x and y axis labels
-- The chart needs a clear title 
-- You need a legend for your different line colors and a clear - legend title
+Show more than one, but fewer than ~10 trends
+For example, two books, or five different mediums
+You must have clear x and y axis labels
+The chart needs a clear title 
+You need a legend for your different line colors and a clear legend title
 In your .Rmd file, make sure to describe why you included the chart, and what patterns emerged
 
-When we say "clear" or "human readable" titles and labels, that means that you should not just display the variable name.
+## Your Choice
 
-Here's an example of how to run an R script inside an RMarkdown file:
-
-``````{r, echo = FALSE, warning = FALSE, code = readLines("chart1_example.R")}
+```{r pressure, echo=FALSE}
+plot(pressure)
 ```
-
-### Second Trends Over Time Chart
-
-Include a chart. Make sure to describe why you included the chart, and what patterns emerged
-
-The second chart that you will create and include will show another trend over time of your variable/topic/interest. Think carefully about what you want to communicate to your user (you may have to find relevant trends in the dataset first!). Here are some requirements to help guide your design:
-
-- Show more than one, but fewer than ~10 trends
-  - For example, two books, or 5 different mediums
-- You must have clear x and y axis labels
-- The chart needs a clear title 
-- You need a legend for your different line colors and a clear - legend title
-In your .Rmd file, make sure to describe why you included the chart, and what patterns emerged
-
-When we say "clear" or "human readable" titles and labels, that means that you should not just display the variable name.
-
-Here's an example of how to run an R script inside an RMarkdown file:
-
-``````{r, echo = FALSE, code = readLines("chart2_example.R")}
-```
-
-### Your Choice
 
 The last chart is up to you. It could be a line plot, scatter plot, histogram, bar plot, stacked bar plot, and more. Here are some requirements to help guide your design:
 
-- You must have clear x and y axis labels
-- The chart needs a clear title 
-- You need a legend for your different line colors and a clear legend title
+You must have clear x and y axis labels
+The chart needs a clear title 
+You need a legend for your different line colors and a clear legend title
+In your .Rmd file, make sure to describe why you included the chart, and what patterns emerged
 
-Here's an example of how to run an R script inside an RMarkdown file:
+## How to knit
 
-``````{r, echo = FALSE, code = readLines("chart2_example.R")}
-```
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
-
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
