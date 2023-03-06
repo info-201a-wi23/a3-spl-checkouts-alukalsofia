@@ -1,13 +1,10 @@
 #What is the total number of checkouts for each Material Type? 
 sum_material_type <- library_df %>%
   group_by(MaterialType) %>% 
-  summarize(sum = sum(Checkouts, na.rm = TRUE), .groups = 'keep')
+  summarize(sum = sum(Checkouts, na.rm = TRUE), .groups = 'keep') %>%
+  arrange(-sum) %>%
+  head(sort(sum_material_type$sum, decreasing = TRUE), n = 10)
 View(sum_material_type)
-
-material_table <- sum_material_type %>% 
-  select(MaterialType, mean, sum) %>%
-  arrange(-mean)
-View(material_table)
 
 #What is the month or year with the most/least checkouts for e-books?
 # Most ebook checkouts

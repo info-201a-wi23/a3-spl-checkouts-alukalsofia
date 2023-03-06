@@ -7,7 +7,7 @@ library(stringr)
 library(plotly)
 
 # Reading the Checkouts CSV into 'library_df'
-library_df <- read.csv("Desktop/INFO/a3-spl-checkouts-alukalsofia/2017-2023-10-Checkouts-SPL-Data.csv",
+library_df <- read.csv("/Users/sofiaalukal/Desktop/INFO_201/Programming-Assignments/a3-spl-checkouts-alukalsofia/2017-2023-10-Checkouts-SPL-Data.csv",
                        stringsAsFactors = FALSE)
 library_df <- library_df %>% 
   mutate(date = paste0(CheckoutYear, "-", CheckoutMonth, "-01"))
@@ -62,7 +62,7 @@ acotar_series <- library_df %>%
 #View(library_df)
 
 #Potential plot for acotar series
-acotar_plot <- ggplot(data = acotar_series) +
+ggplot(data = acotar_series) +
   geom_point(aes(x = date, y = sum, color = Title)) +
   labs(title = "Comparing the 'A Court of Thorns and Roses Series'", 
        x = "Date (months)", 

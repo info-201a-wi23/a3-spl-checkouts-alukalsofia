@@ -1,4 +1,3 @@
-
 #Loading Tidyverse and Readr
 library(tidyverse)
 library(readr)
@@ -9,7 +8,7 @@ library(plotly)
 library(ggplot2)
 
 # Reading the Checkouts CSV into 'library_df'
-library_df <- read.csv("Desktop/INFO/a3-spl-checkouts-alukalsofia/2017-2023-10-Checkouts-SPL-Data.csv",
+library_df <- read.csv("/Users/sofiaalukal/Desktop/INFO_201/Programming-Assignments/a3-spl-checkouts-alukalsofia/2017-2023-10-Checkouts-SPL-Data.csv",
                        stringsAsFactors = FALSE)
 library_df <- library_df %>% 
   mutate(date = paste0(CheckoutYear, "-", CheckoutMonth, "-01"))
@@ -20,7 +19,7 @@ library_df$Title <- tolower(library_df$Title)
 
 library_df$Subjects <- tolower(library_df$Subjects)
 
-View(library_df)
+#View(library_df)
 
 # material types data processing
 material_types <- library_df %>% 
@@ -29,11 +28,11 @@ material_types <- library_df %>%
                              "VIDEODISC", "SOUNDDISK", "AUDIOBOOK",
                              "MOVIE", "MIXED", "SONG")) %>%
   summarize(sum = sum(Checkouts, na.rm = TRUE), .groups = "drop")
-View(material_types)
-View(library_df)
+#View(material_types)
+#View(library_df)
 
 # Material types plot
-material_plot <- ggplot(data = material_types) +
+ggplot(data = material_types) +
   geom_line(aes(x = date, y = sum, color = MaterialType)) +
   labs(title = "Comparing Different Material Types Over 6 Years", 
        x = "Date (months)", 
